@@ -30,3 +30,14 @@ Dispatch an event:
 ```ts
 dispatcher.emit(createEvent<TaskEvent>('message-sent', { message: 'hello, world' }))
 ```
+
+
+When registering a handler, an unsubscribe function is returned:
+
+```ts
+const unsubscribe = dispatcher.on('some-event', () => {console.log("I'm handling!")})
+
+unsubscribe()
+
+dispatcher.emit('some-event') // our handler is not called
+```

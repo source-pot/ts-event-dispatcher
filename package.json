@@ -1,7 +1,8 @@
 {
-    "name": "app",
+    "name": "ts-event-dispatcher",
     "version": "1.0.0",
-    "main": "main.js",
+    "main": "lib/EventDispatcher.js",
+    "types": "lib/EventDispatcher.d.ts",
     "type": "module",    
     "dependencies": {
     },
@@ -10,10 +11,14 @@
     },
     "scripts": {
         "start": "tsc && node dist/main.js",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "tsc",
+        "prepare": "npm run build"
     },
     "keywords": [],
-    "author": "",
-    "license": "ISC",
-    "description": ""
+    "author": "Rob Watson, Source Pot",
+    "homepage": "https://github.com/source-pot/ts-event-dispatcher",
+    "license": "MIT",
+    "description": "A simple event dispatcher implementation with Typescript",
+    "files": ["lib/**/*"]
 }

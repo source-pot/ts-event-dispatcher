@@ -1,11 +1,11 @@
 {
     "compilerOptions": {
-        "module": "ESNext",
-        "esModuleInterop": true,
         "target": "es6",
-        "moduleResolution": "node",
-        "sourceMap": true,
-        "outDir": "dist"
+        "module": "commonjs",
+        "declaration": true,
+        "outDir": "./lib"
     },
-    "lib": ["esnext"]
+    "include": ["src"],
+    "exclude": ["node_modules"],
+    "lib": ["commonjs"]
 }

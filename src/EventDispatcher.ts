@@ -10,25 +10,28 @@ export type EventDispatcherUnsubscribe = () => void
 // Deliberately empty for extension purposes
 export type EventPayload = {}
 
-export type EventHandler = (event: Event<EventPayload>) => void
-
-type DefaultHandlerList = [ eventName: string, handler: EventHandler ][]
+// Promise or void allows Typescript to let us use async functions
+export type EventHandler = (event: Event<EventPayload>) => void|Promise<void>
 
 export type Event<PayloadType> = {
   name: string,
   payload: PayloadType,
+  cancelled?: boolean
 }
 
-export function createEvent<EventPayloadType>(
-  eventName: string, payload: EventPayloadType
-): Event<EventPayloadType> {
+export function createEvent<PayloadType>(
+  eventName: string, payload: PayloadType
+): Event<PayloadType> {
   return {
     name: eventName,
+    cancelled: false,
     payload,
   }
 }
 
-export function createEventDispatcher(defaultHandlers: DefaultHandlerList): EventDispatcher {
+export function createEventDispatcher(
+  defaultHandlers: [ eventName: string, handler: EventHandler ][]
+): EventDispatcher {
   const listeners = new Map<string, Set<EventHandler>>()
 
   defaultHandlers.forEach(input => on(...input))
@@ -44,8 +47,15 @@ export function createEventDispatcher(defaultHandlers: DefaultHandlerList): Even
     }
   }
 
-  function emit<EventPayloadType>(event: Event<EventPayloadType>) {
-    listeners.get(event.name)?.forEach(listener => listener(event))
+  async function emit<PayloadType>(event: Event<PayloadType>) {
+    const handlers = listeners.get(event.name)
+    // Using a standard for loop here allows us an early exit from the loop
+    for( const handler of handlers) {
+      await handler(event)
+      if (event.cancelled === true) {
+        return
+      }
+    }
   }
 
   return {on, emit}

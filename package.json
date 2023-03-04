@@ -1,6 +1,6 @@
 {
-    "name": "ts-event-dispatcher",
-    "version": "1.0.0",
+    "name": "source-pot-event-dispatcher",
+    "version": "1.0.1",
     "main": "lib/EventDispatcher.js",
     "types": "lib/EventDispatcher.d.ts",
     "type": "module",    

@@ -1,5 +1,3 @@
-
-
 export type EventDispatcher = {
   on: (eventName: string, handler: EventHandler) => EventDispatcherUnsubscribe,
   emit: (event: Event<EventPayload>) => void

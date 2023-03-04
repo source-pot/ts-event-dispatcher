@@ -1,7 +1,14 @@
-# ts-event-dispatcher
+# source-pot-event-dispatcher
+
 
 A basic implementation of an Event Dispatcher with Handler written with Typescript and
 using generics to extend the Events passed around.
+Written using a functional programming style with "factory functions" to create the Dispatcher and Events.
+
+## Installation
+
+`npm i source-pot-event-dispatcher`
+
 
 ## Usage
 
@@ -36,7 +43,7 @@ dispatcher.on('message-sent', (event: Event<MessageEvent>) => console.log(event.
 Dispatch an event:
 
 ```ts
-dispatcher.emit(createEvent<TaskEvent>('message-sent', { message: 'hello, world' }))
+dispatcher.emit(createEvent<MessageEvent>('message-sent', { message: 'hello, world' }))
 ```
 
 
@@ -48,6 +55,17 @@ const unsubscribe = dispatcher.on('some-event', () => {console.log("I'm handling
 unsubscribe()
 
 dispatcher.emit('some-event') // our handler is not called
+```
+
+Supports cancellable events with the `cancelled` property:
+
+```ts
+dispatcher.on('message-sent', (event: Event<MessageEvent>) => event.cancelled = true)
+
+// This handler will never be called because the first handler cancels the event
+dispatcher.on('message-sent', (event: Event<MessageEvent>) => console.log(event.payload.message))
+
+dispatcher.emit(createEvent<MessageEvent>('message-sent', { message: 'hello, world' }))
 ```
 
 

@@ -19,6 +19,14 @@ Create an Event Dispatcher using it's create function:
 const dispatcher = createEventDispatcher()
 ```
 
+You can also pass a list of existing events with handlers when creating:
+
+```ts
+const dispatcher = createEventDispatcher([
+    [ 'message-sent', event => console.log('Event received', event.name)]
+])
+```
+
 Add a listener/handler:
 
 ```ts
@@ -41,3 +49,15 @@ unsubscribe()
 
 dispatcher.emit('some-event') // our handler is not called
 ```
+
+
+## Use cases
+
+1. Logging.  When starting up your application, register a logging function against each event you
+   plan on having your app emit, they'll be triggered each time the event is sent.
+2. Asynchronous processing.  Using `async` functions as callbacks means execution won't be paused
+   waiting for a long-winded process to happen, for example using the filesystem, interacting with
+   a database, or making a http request.
+3. Decoupling logic that doesn't really belong in together.   Report on something happening in a
+   separate function to processing some data, fire events while handling events to truly unlock this
+   power.

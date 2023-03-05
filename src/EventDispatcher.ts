@@ -28,7 +28,7 @@ export function createEvent<PayloadType>(
 }
 
 export function createEventDispatcher(
-  defaultHandlers: [ eventName: string, handler: EventHandler ][]
+  defaultHandlers: [ eventName: string, handler: EventHandler ][] = []
 ): EventDispatcher {
   const listeners = new Map<string, Set<EventHandler>>()
 

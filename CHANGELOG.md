@@ -1,6 +1,9 @@
 # Changelog
 
-## version 1.0.2
+## version 1.1.1
+* Update package.json to mark this as 'commonjs' instead of 'module'
+
+## version 1.1.0
 
 * Fix createEventDispatcher constructor to not require a default handler list to be passed in
 * Added tests using Jest
